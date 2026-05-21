@@ -1,34 +1,50 @@
 # 🎬 CineTrack
 
-> Sistema de gerenciamento e catalogação de conteúdos audiovisuais desenvolvido em Java puro.
+<div align="center">
+
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![POO](https://img.shields.io/badge/Paradigma-POO-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Concluído-brightgreen?style=for-the-badge)
+![Licença](https://img.shields.io/badge/Licença-MIT-green?style=for-the-badge)
+
+> Sistema de gerenciamento e catalogação de conteúdos audiovisuais desenvolvido em Java puro com foco em Programação Orientada a Objetos.
+
+</div>
 
 ---
 
-## 👥 Equipe
+## 📑 Índice
 
-| Nome               |
-|--------------------|
-| Ayslan Gadelha     |
-| Cristian Ribeiro   |
-| Eliandra Virginia  |
-| Rodney Moreira     |
-| Filipe Sales       |
-
----
-
-## 📋 Descrição
-
-O **CineTrack** é um sistema orientado a objetos desenvolvido em Java para cadastrar, avaliar e calcular a duração total de conteúdos audiovisuais. O projeto contempla dois tipos de conteúdo: **longas-metragens** e **seriados**, ambos compartilhando atributos comuns por meio de uma classe base chamada `Conteudo`.
-
-O sistema permite:
-- Cadastrar um longa-metragem com nome, realizador (diretor), ano de estreia e duração.
-- Registrar múltiplas avaliações para um longa e calcular a média delas.
-- Cadastrar um seriado com nome, ano de estreia, número de temporadas, episódios por temporada e duração por episódio.
-- Calcular a duração total acumulada de todos os conteúdos cadastrados por meio do `GerenciadorDeDuracao`.
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Funcionalidades](#-funcionalidades)
+- [Arquitetura](#-arquitetura)
+- [Classes e Responsabilidades](#-classes-e-responsabilidades)
+- [Conceitos de POO Aplicados](#-conceitos-de-poo-aplicados)
+- [Como Executar](#-como-executar)
+- [Exemplo de Uso](#-exemplo-de-uso)
+- [Equipe](#-equipe)
 
 ---
 
-## 🏗️ Estrutura do Projeto
+## 📖 Sobre o Projeto
+
+O **CineTrack** é um sistema orientado a objetos desenvolvido em Java para cadastrar, avaliar e calcular a duração total de conteúdos audiovisuais. O projeto contempla dois tipos de conteúdo — **longas-metragens** e **seriados** — que compartilham atributos comuns por meio de uma classe base chamada `Conteudo`.
+
+Desenvolvido como projeto prático para a disciplina de **Programação Orientada a Objetos (POO)**.
+
+---
+
+## ✨ Funcionalidades
+
+- ✅ Cadastrar longas-metragens com nome, diretor, ano e duração
+- ✅ Registrar e calcular média de avaliações de um longa
+- ✅ Cadastrar seriados com temporadas, episódios e duração por episódio
+- ✅ Calcular duração total acumulada de todos os conteúdos via `GerenciadorDeDuracao`
+- ✅ Exibir ficha técnica completa de cada conteúdo
+
+---
+
+## 🏗️ Arquitetura
 
 ```
 cinetrack/
@@ -39,9 +55,9 @@ cinetrack/
             └── acr/
                 └── cinetrack/
                     ├── modelos/
-                    │   ├── Conteudo.java
-                    │   ├── Longa.java
-                    │   └── Seriado.java
+                    │   ├── Conteudo.java        ← Classe base (abstração)
+                    │   ├── Longa.java           ← Longa-metragem
+                    │   └── Seriado.java         ← Série de TV
                     └── calculos/
                         └── GerenciadorDeDuracao.java
 ```
@@ -50,125 +66,131 @@ cinetrack/
 
 ## 📁 Classes e Responsabilidades
 
-### `Conteudo` — Classe Base (Abstração)
+### `Conteudo` — Classe Base
+
 **Pacote:** `br.com.acr.cinetrack.modelos`
 
-Classe pai que representa qualquer conteúdo audiovisual da plataforma. Contém os atributos e comportamentos compartilhados por longas e seriados.
+Classe pai que representa qualquer conteúdo audiovisual. Centraliza atributos e comportamentos compartilhados por longas e seriados.
 
-| Atributo                  | Tipo      | Descrição                                      |
-|---------------------------|-----------|------------------------------------------------|
-| `designacao`              | `String`  | Nome/título do conteúdo                        |
-| `anoDeEstreia`            | `int`     | Ano de lançamento (deve ser maior que 1888)    |
-| `duracaoTotal`            | `int`     | Duração em minutos (deve ser maior que 0)      |
-| `quantidadeDeAvaliacoes`  | `int`     | Contador de avaliações registradas             |
-| `somaDeNotas`             | `double`  | Soma de todas as notas recebidas               |
-| `pontuacao`               | `double`  | Pontuação individual                           |
-| `mediaDasNotas`           | `double`  | Campo auxiliar para média                      |
-| `disponivelNaPlataforma`  | `boolean` | Indica se o conteúdo está ativo na plataforma  |
+| Atributo | Tipo | Descrição |
+|---|---|---|
+| `designacao` | `String` | Nome/título do conteúdo |
+| `anoDeEstreia` | `int` | Ano de lançamento (> 1888) |
+| `duracaoTotal` | `int` | Duração em minutos (> 0) |
+| `quantidadeDeAvaliacoes` | `int` | Contador de avaliações |
+| `somaDeNotas` | `double` | Soma de todas as notas |
+| `disponivelNaPlataforma` | `boolean` | Se o conteúdo está ativo |
 
-| Método                              | Descrição                                          |
-|-------------------------------------|----------------------------------------------------|
-| `exibirDetalhes()`                  | Imprime no console os dados principais do conteúdo |
-| `registrarAvaliacao(double nota)`   | Acumula uma nota e incrementa o contador           |
-| `calcularMedia()`                   | Retorna a média aritmética das avaliações          |
-| `obterDuracaoEmMinutos()`           | Retorna a duração total em minutos                 |
+| Método | Descrição |
+|---|---|
+| `exibirDetalhes()` | Imprime os dados principais do conteúdo |
+| `registrarAvaliacao(double nota)` | Acumula uma nota e incrementa o contador |
+| `calcularMedia()` | Retorna a média aritmética das avaliações |
+| `obterDuracaoEmMinutos()` | Retorna a duração total em minutos |
 
-**Validações:**
-- `setAnoDeEstreia`: o ano deve ser superior a 1888 (ano de invenção do cinema).
-- `setDuracaoTotal`: a duração deve ser maior que zero.
+> **Validações:** `setAnoDeEstreia` exige ano > 1888; `setDuracaoTotal` exige valor > 0.
 
 ---
 
 ### `Longa` — Longa-Metragem
+
 **Pacote:** `br.com.acr.cinetrack.modelos`
 
-Subclasse de `Conteudo` que representa um filme de longa-metragem. Adiciona o atributo `realizador` (diretor do filme) e sobrescreve o método `obterDuracaoEmMinutos()`.
+Subclasse de `Conteudo`. Adiciona o atributo `realizador` e sobrescreve `obterDuracaoEmMinutos()`.
 
-| Atributo     | Tipo     | Descrição                   |
-|--------------|----------|-----------------------------|
-| `realizador` | `String` | Nome do diretor do filme    |
-
-| Método                   | Descrição                                     |
-|--------------------------|-----------------------------------------------|
-| `obterDuracaoEmMinutos()`| Retorna diretamente o valor de `duracaoTotal` |
+| Atributo | Tipo | Descrição |
+|---|---|---|
+| `realizador` | `String` | Nome do diretor do filme |
 
 ---
 
 ### `Seriado` — Série de TV
+
 **Pacote:** `br.com.acr.cinetrack.modelos`
 
-Subclasse de `Conteudo` que representa uma série de televisão. A duração total é calculada automaticamente com base no número de temporadas, episódios e duração de cada episódio.
+Subclasse de `Conteudo`. A duração total é calculada automaticamente com base no número de temporadas, episódios e duração por episódio.
 
-| Atributo               | Tipo      | Descrição                                  |
-|------------------------|-----------|--------------------------------------------|
-| `totalDeTemporadas`    | `int`     | Número de temporadas do seriado            |
-| `episodiosPorTemp`     | `int`     | Quantidade de episódios por temporada      |
-| `duracaoPorEpisodio`   | `int`     | Duração de cada episódio em minutos        |
-| `emExibicao`           | `boolean` | Indica se o seriado ainda está no ar       |
+| Atributo | Tipo | Descrição |
+|---|---|---|
+| `totalDeTemporadas` | `int` | Número de temporadas |
+| `episodiosPorTemp` | `int` | Episódios por temporada |
+| `duracaoPorEpisodio` | `int` | Duração de cada episódio (min) |
+| `emExibicao` | `boolean` | Se ainda está no ar |
 
-| Método                   | Descrição                                                              |
-|--------------------------|------------------------------------------------------------------------|
-| `obterDuracaoEmMinutos()`| Calcula: `totalDeTemporadas × episodiosPorTemp × duracaoPorEpisodio`  |
+> **Cálculo:** `obterDuracaoEmMinutos()` = `totalDeTemporadas × episodiosPorTemp × duracaoPorEpisodio`
 
 ---
 
 ### `GerenciadorDeDuracao` — Calculadora de Tempo Total
+
 **Pacote:** `br.com.acr.cinetrack.calculos`
 
-Responsável por acumular e fornecer a duração total de todos os conteúdos adicionados. Trabalha com a abstração `Conteudo`, sendo compatível tanto com `Longa` quanto com `Seriado` (polimorfismo).
+Responsável por acumular e fornecer a duração total de todos os conteúdos adicionados. Utiliza polimorfismo para ser compatível com `Longa` e `Seriado` por meio da superclasse `Conteudo`.
 
-| Atributo            | Tipo  | Descrição                                         |
-|---------------------|-------|---------------------------------------------------|
-| `duracaoAcumulada`  | `int` | Soma total da duração de todos os conteúdos       |
+| Atributo | Tipo | Descrição |
+|---|---|---|
+| `duracaoAcumulada` | `int` | Soma total de todos os conteúdos |
 
-| Método                              | Descrição                                                         |
-|-------------------------------------|-------------------------------------------------------------------|
-| `adicionarConteudo(Conteudo c)`     | Chama `obterDuracaoEmMinutos()` e acumula ao total               |
-| `getDuracaoAcumulada()`             | Retorna o tempo total acumulado em minutos                        |
+| Método | Descrição |
+|---|---|
+| `adicionarConteudo(Conteudo c)` | Chama `obterDuracaoEmMinutos()` e acumula ao total |
+| `getDuracaoAcumulada()` | Retorna o tempo total acumulado em minutos |
 
 ---
 
-### `Aplicacao` — Classe Principal
+### `Aplicacao` — Ponto de Entrada
+
 **Arquivo:** `src/Aplicacao.java`
 
-Ponto de entrada da aplicação. Responsável por ler os dados via terminal usando `Scanner`, instanciar os objetos e exibir os resultados.
+Lê os dados via terminal com `Scanner`, instancia os objetos e exibe os resultados. Fluxo:
 
-**Fluxo de execução:**
-1. Lê e cadastra um longa-metragem (nome, realizador, ano, duração e avaliações).
-2. Lê e cadastra um seriado (nome, ano, temporadas, episódios e duração por episódio).
-3. Exibe a ficha técnica de ambos.
-4. Exibe a soma, a quantidade e a média das avaliações do longa.
-5. Adiciona os dois ao `GerenciadorDeDuracao` e exibe o tempo total acumulado.
+1. Lê e cadastra um longa-metragem
+2. Lê e cadastra um seriado
+3. Exibe a ficha técnica de ambos
+4. Exibe soma, quantidade e média de avaliações do longa
+5. Adiciona os dois ao `GerenciadorDeDuracao` e exibe o tempo total acumulado
 
 ---
 
 ## 🧠 Conceitos de POO Aplicados
 
-| Conceito          | Onde é aplicado                                                                                 |
-|-------------------|-------------------------------------------------------------------------------------------------|
-| **Herança**       | `Longa` e `Seriado` herdam de `Conteudo`                                                        |
-| **Polimorfismo**  | `obterDuracaoEmMinutos()` é sobrescrito em `Longa` e `Seriado`; `GerenciadorDeDuracao` usa `Conteudo` |
-| **Encapsulamento**| Todos os atributos são `private` com acesso via getters e setters                               |
-| **Abstração**     | `Conteudo` centraliza os atributos e comportamentos comuns                                      |
-| **Validação**     | Setters de `anoDeEstreia` e `duracaoTotal` possuem regras de negócio                           |
+| Conceito | Aplicação no Projeto |
+|---|---|
+| **Herança** | `Longa` e `Seriado` herdam de `Conteudo` |
+| **Polimorfismo** | `obterDuracaoEmMinutos()` é sobrescrito em cada subclasse; `GerenciadorDeDuracao` usa `Conteudo` como tipo base |
+| **Encapsulamento** | Todos os atributos são `private` com acesso via getters/setters |
+| **Abstração** | `Conteudo` centraliza os comportamentos e atributos comuns |
+| **Validação** | Setters com regras de negócio (`anoDeEstreia > 1888`, `duracaoTotal > 0`) |
 
 ---
 
-## ▶️ Como Compilar e Executar
+## 🚀 Como Executar
 
 ### Pré-requisitos
-- JDK 8 ou superior instalado
+
+- JDK 8 ou superior
 - Terminal (cmd, bash ou PowerShell)
 
-### Compilação
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/eliandravirginia-prog/cinetrack.git
+cd cinetrack
+```
+
+### 2. Compile
 
 Dentro da pasta `src/`:
 
 ```bash
-javac -d . Aplicacao.java br/com/acr/cinetrack/modelos/Conteudo.java br/com/acr/cinetrack/modelos/Longa.java br/com/acr/cinetrack/modelos/Seriado.java br/com/acr/cinetrack/calculos/GerenciadorDeDuracao.java
+javac -d . Aplicacao.java \
+  br/com/acr/cinetrack/modelos/Conteudo.java \
+  br/com/acr/cinetrack/modelos/Longa.java \
+  br/com/acr/cinetrack/modelos/Seriado.java \
+  br/com/acr/cinetrack/calculos/GerenciadorDeDuracao.java
 ```
 
-### Execução
+### 3. Execute
 
 ```bash
 java Aplicacao
@@ -179,55 +201,47 @@ java Aplicacao
 ## 💡 Exemplo de Uso
 
 ```
-Digite o nome do filme:
-Oppenheimer
-Digite o nome do diretor do filme:
-Christopher Nolan
-Digite o ano de lançamento do filme:
-2023
-Digite a duração do filme em minutos:
-180
-Digite a quantidade de avaliações:
-2
-Digite a nota da avaliação 1:
-9.5
-Digite a nota da avaliação 2:
-8.0
-Digite o nome da série:
-Breaking Bad
-Digite o ano de lançamento da série:
-2008
-Digite a quantidade de temporadas da série:
-5
-Digite a quantidade de episódios por temporada:
-13
-Digite a duração de cada episódio em minutos:
-47
+Digite o nome do filme: Oppenheimer
+Digite o nome do diretor do filme: Christopher Nolan
+Digite o ano de lançamento do filme: 2023
+Digite a duração do filme em minutos: 180
+Digite a quantidade de avaliações: 2
+Digite a nota da avaliação 1: 9.5
+Digite a nota da avaliação 2: 8.0
 
-Nome: Oppenheimer
-Ano de estreia: 2023
-Duração em minutos: 180
-Nome: Breaking Bad
-Ano de estreia: 2008
-Duração em minutos: 0
+Digite o nome da série: Breaking Bad
+Digite o ano de lançamento da série: 2008
+Digite a quantidade de temporadas da série: 5
+Digite a quantidade de episódios por temporada: 13
+Digite a duração de cada episódio em minutos: 47
+
+--- Ficha Técnica ---
+Nome: Oppenheimer | Ano: 2023 | Duração: 180 min
+Nome: Breaking Bad | Ano: 2008 | Duração: 3055 min
+
 Soma das avaliações: 17.5
 Total de avaliações: 2
 Média das avaliações: 8.75
-Adicionando duração em minutos de br.com.acr.cinetrack.modelos.Longa@...
-Adicionando duração em minutos de br.com.acr.cinetrack.modelos.Seriado@...
-Tempo total: 3235
+
+Tempo total acumulado: 3235 min
 ```
 
 ---
 
-## 📌 Observações
+## 👥 Equipe
 
-- A classe `Seriado` não utiliza o atributo `duracaoTotal` herdado de `Conteudo` para calcular sua duração — ela usa a multiplicação `totalDeTemporadas × episodiosPorTemp × duracaoPorEpisodio` via override do método `obterDuracaoEmMinutos()`.
-- O `GerenciadorDeDuracao` usa polimorfismo: recebe um objeto do tipo `Conteudo` e chama `obterDuracaoEmMinutos()`, que se comporta diferente para `Longa` e `Seriado`.
-- As versões comentadas dos métodos `inclui(Filme)` e `inclui(Serie)` do original foram substituídas por uma única implementação polimórfica usando a superclasse `Conteudo`.
+| Nome |
+|---|
+| Ayslan Gadelha |
+| Cristian Ribeiro |
+| Eliandra Virginia |
+| Rodney Moreira |
+| Filipe Sales |
 
 ---
 
+<div align="center">
+
 *Projeto desenvolvido para a disciplina de Programação Orientada a Objetos (POO).*
-#   c i n e t r a c k  
- 
+
+</div>
